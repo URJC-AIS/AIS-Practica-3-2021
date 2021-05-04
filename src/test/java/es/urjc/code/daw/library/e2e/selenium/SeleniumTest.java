@@ -56,7 +56,7 @@ public class SeleniumTest {
 	public void createBookTest() throws Exception {
 
         // GIVEN: Partiendo de que estamos en la página principal de la libreria
-        driver.get("http://" + host + ":" + this.port + "/");
+        openApp();
 
         // WHEN: Creamos un nuevo libro
 
@@ -76,7 +76,7 @@ public class SeleniumTest {
 	public void deleteBookTest() throws Exception {
 
         // GIVEN: Partiendo de que estamos en la página principal de la libreria
-        driver.get("http://" + host + ":" + this.port + "/");
+        openApp();
 
         // WHEN: 
         
@@ -96,6 +96,14 @@ public class SeleniumTest {
             driver.findElement(By.linkText(title));
         });
 
+    }
+
+    private void openApp(){
+        if(host == "localhost"){
+            driver.get("http://localhost:" + this.port + "/");
+        }else{
+            driver.get("https://" + host + "/");
+        }
     }
 
     private void createNewBook(String title, String description){
