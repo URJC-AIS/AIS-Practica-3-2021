@@ -18,6 +18,6 @@ jobs:
       with:
         java-version: 11
     - name: Run unitary test
-      run: mvn -Dtest=BookServiceUnitaryTest test
+      run: mvn -B -Dtest=BookServiceUnitaryTest test
     - name: Run REST test
-      run: mvn -Dtest=RestTest test
+      run: mvn -B -Dtest=RestTest test
