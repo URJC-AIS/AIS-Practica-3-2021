@@ -1,7 +1,5 @@
 package es.urjc.code.daw.library.e2e.selenium;
 
-import org.openqa.selenium.NoSuchElementException;
-
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
 import org.junit.jupiter.api.AfterEach;
@@ -10,8 +8,10 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -28,15 +28,19 @@ public class SeleniumTest {
 
     private WebDriver driver;
     private WebDriverWait wait;
+    private static String host;
 
 	@BeforeAll
 	public static void setupClass() {
 		WebDriverManager.chromedriver().setup();
+        host = System.getProperty("host", "localhost");
 	}
 
 	@BeforeEach
 	public void setupTest() {
-        this.driver = new ChromeDriver();
+        ChromeOptions options = new ChromeOptions();
+		options.addArguments("--headless");
+        this.driver = new ChromeDriver(options);
         this.wait = new WebDriverWait(driver, 10);
 	}
 
@@ -52,7 +56,7 @@ public class SeleniumTest {
 	public void createBookTest() throws Exception {
 
         // GIVEN: Partiendo de que estamos en la página principal de la libreria
-        this.driver.get("http://localhost:"+this.port+"/");
+        driver.get("http://" + host + ":" + this.port + "/");
 
         // WHEN: Creamos un nuevo libro
 
@@ -72,7 +76,7 @@ public class SeleniumTest {
 	public void deleteBookTest() throws Exception {
 
         // GIVEN: Partiendo de que estamos en la página principal de la libreria
-        this.driver.get("http://localhost:"+this.port+"/");
+        driver.get("http://" + host + ":" + this.port + "/");
 
         // WHEN: 
         
